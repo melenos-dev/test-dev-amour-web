@@ -73,7 +73,7 @@ function removeGiftFromCart() {
 
 // Mettre à jour le drawer avec le produit cadeau, en async : en cas de besoin dans d'autres contextes.
 async function updateCartDrawer() {
-    const res = await fetch("/?section_id=cart-drawer");
+    const res = await fetch("/?section_id=cart-drawer"); // Utilisation de la méthode AJAX de Shopify pour récupérer la section à jour
     const text = await res.text();
     const html = document.createElement("div");
     html.innerHTML = text;
