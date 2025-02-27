@@ -26,7 +26,7 @@ Exemple :
 -   Récupération de l'objet `cart` fournit par `subscribe(PUB_SUB_EVENTS.cartUpdate)`.
 -   Test du prix total pour savoir s'il est plus grand ou égal à 100€.
 -   Utilisation de `l'API Ajax` vers `/cart/add.js` ou `/cart/change.js`, en fonction du résultat (ajout/suppression du cadeau).
--   Mise à jour de la section du drawer, toujours avec la même API. J'ai préféré mettre à jour la section entière plutot qu'ajouter manuellement le cadeau dans la section, pour avoir la certitude d'une cohérence des données `back/front`
+-   Mise à jour de la section du drawer, toujours avec la même API. J'ai préféré mettre à jour la section entière plutot qu'ajouter manuellement le cadeau dans la section, pour avoir la certitude d'une cohérence des données `back/front`. J'ai hésité à utiliser `renderContents()`, mais le résultat est le même.
 
 ###### Test en local
 

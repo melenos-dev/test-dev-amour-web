@@ -7,8 +7,20 @@ subscribe(PUB_SUB_EVENTS.cartUpdate, function (event) {
 const GIFT_VARIANT_ID = 56548496114013; // ID du variant du produit cadeau
 
 // Vérifier le total du panier et ajouter/retirer le cadeau
-function checkCartTotal(cart) {
+async function checkCartTotal(cart) {
+    if (!cart.items) {
+        // Si l'user vient d'ajouter un produit au panier, cart vaut uniquement ce produit. Nous devons donc rechercher le panier manuellement
+        try {
+            const response = await fetch("/cart.js");
+            cart = await response.json();
+        } catch (error) {
+            console.error("Erreur lors de la récupération du panier:", error);
+            return;
+        }
+    }
+
     const totalPriceInEuros = cart.total_price / 100;
+
     const giftItem = cart.items.find(
         (item) => item.variant_id === GIFT_VARIANT_ID
     );
