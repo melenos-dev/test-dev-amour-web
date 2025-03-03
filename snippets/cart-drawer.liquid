@@ -95,10 +95,10 @@
           <!-- Si le prix total est plus petit que 100€, prévenir l'user qu'un cadeau est également possible -->
           {% if total_price < gift_threshold %}
             <!-- Même logique ici -->
-            <li>Plus que {{ gift_threshold | minus: total_price }} € pour recevoir un cadeau offert</li>
+            <li class="cadeau">Plus que {{ gift_threshold | minus: total_price }} € pour recevoir un cadeau offert</li>
           {% else %}
             <!-- Sinon, un cadeau a été offert, nous pouvons utiliser l'API Ajax pour ajouter le cadeau -->
-            <li class="success">Un cadeau a été ajouté à votre panier !</li>
+            <li class="success cadeau">Un cadeau a été ajouté à votre panier !</li>
           {% endif %}
         </ul>
       </div>
