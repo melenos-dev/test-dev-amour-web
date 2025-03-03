@@ -1,28 +1,28 @@
 name: CI/CD Shopify Theme
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    deploy:
-        name: Deploy to Shopify
-        runs-on: ubuntu-latest
-        needs: test
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+  deploy:
+    environment: shopify secrets
+    name: Deploy to Shopify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-            - name: Install Shopify CLI
-              run: npm install -g @shopify/cli @shopify/theme
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
 
-            - name: Deploy to Shopify
-              env:
-                  SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
-                  SHOPIFY_ADMIN_API_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
-              run: |
-                  shopify theme push --store ${SHOPIFY_STORE_URL} --password ${SHOPIFY_ADMIN_API_TOKEN} --theme-id 179739263325
+      - name: Deploy to Shopify
+        env:
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          SHOPIFY_ADMIN_API_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
+        run: |
+          shopify theme push --store ${SHOPIFY_STORE_URL} --password ${SHOPIFY_ADMIN_API_TOKEN} --theme 179739263325 --allow-live
