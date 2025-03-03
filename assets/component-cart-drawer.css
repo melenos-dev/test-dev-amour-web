@@ -95,6 +95,21 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
   cursor: pointer;
 }
 
+.drawer__promotion {
+  padding-bottom: 1.5rem;
+}
+
+.drawer__promotion .success {
+  color: rgb(1, 88, 1);
+}
+
+.drawer__promotion .cadeau {
+  visibility: hidden;
+}
+
+.drawer__promotion .cadeau.available {
+  visibility: visible;
+}
 .cart-drawer__warnings .drawer__close {
   right: 5px;
 }
@@ -357,9 +372,17 @@ cart-drawer-items {
   }
 
   .drawer__footer #dynamic-checkout-cart ul > li:first-child:nth-last-child(2),
-  .drawer__footer #dynamic-checkout-cart ul > li:first-child:nth-last-child(2) ~ li,
+  .drawer__footer
+    #dynamic-checkout-cart
+    ul
+    > li:first-child:nth-last-child(2)
+    ~ li,
   .drawer__footer #dynamic-checkout-cart ul > li:first-child:nth-last-child(4),
-  .drawer__footer #dynamic-checkout-cart ul > li:first-child:nth-last-child(4) ~ li {
+  .drawer__footer
+    #dynamic-checkout-cart
+    ul
+    > li:first-child:nth-last-child(4)
+    ~ li {
     flex-basis: calc(50% - 0.5rem) !important;
   }
 }

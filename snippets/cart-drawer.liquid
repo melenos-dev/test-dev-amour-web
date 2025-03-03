@@ -74,6 +74,35 @@
           </span>
         </button>
       </div>
+      
+      <div class="drawer__promotion">
+        {% assign free_shipping_threshold = 50 %}
+        {% assign gift_threshold = 100 %}
+
+        <!-- Le prix total doit être divisé par 100 afin de connaître le résultat en euros -->
+        {% assign total_price = cart.total_price | divided_by: 100 %} 
+
+        <h3>Offres promotionnelles</h3>
+        <ul>
+          <!-- Si le prix total est plus petit que 50€, prévenir l'user que la livraison pourrait être gratuite -->
+          {% if total_price < free_shipping_threshold %}
+            <!-- Utilisation de minus pour calculer les euros manquants -->
+            <li>Plus que {{ free_shipping_threshold | minus: total_price }} € pour bénéficier de la livraison gratuite</li>
+          {% else %}
+            <li class="success">Livraison gratuite !</li>
+          {% endif %}
+
+          <!-- Si le prix total est plus petit que 100€, prévenir l'user qu'un cadeau est également possible -->
+          {% if total_price < gift_threshold %}
+            <!-- Même logique ici -->
+            <li class="cadeau">Plus que {{ gift_threshold | minus: total_price }} € pour recevoir un cadeau offert</li>
+          {% else %}
+            <!-- Sinon, un cadeau a été offert, nous pouvons utiliser l'API Ajax pour ajouter le cadeau -->
+            <li class="success cadeau">Un cadeau a été ajouté à votre panier !</li>
+          {% endif %}
+        </ul>
+      </div>
+
       <cart-drawer-items
         {% if cart == empty %}
           class=" is-empty"
