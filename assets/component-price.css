@@ -27,6 +27,22 @@
   margin-right: 0;
 }
 
+.price__regular .soldes {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.price__regular .price-item--regular.old {
+  text-decoration: line-through;
+}
+
+.price__regular .price-item--discount {
+  background-color: #ffcc00;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 .price:not(.price--show-badge) .price-item--last:last-of-type {
   margin: 0;
 }

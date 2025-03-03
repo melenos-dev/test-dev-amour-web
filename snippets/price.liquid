@@ -38,8 +38,30 @@
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
--%}
 
+  # Détection des promotions
+  assign is_promotion = false
+  assign discount_percentage = 0
+
+  for collection in product.collections
+    if collection.handle == 'promotions'
+      # Récupération de la valeur metafield présente dans la collection Promotions
+      assign is_promotion = true
+      assign discount_percentage = collection.metafields.custom.discount_percentage | default: 0
+    endif
+  endfor
+
+   # Application de la promotion si le produit est dans la collection "Promotions" et que la metafield a bien été renseignée
+  if is_promotion and discount_percentage > 0
+    assign discount_decimal = discount_percentage | divided_by: 100.0
+    assign discount_multiplier = 1.0 | minus: discount_decimal
+    assign discounted_price = price | times: discount_multiplier  
+    assign money_discounted_price = discounted_price | money
+    if settings.currency_code_enabled
+      assign money_discounted_price = discounted_price | money_with_currency
+    endif
+  endif
+-%}
 {%- unless target == null and placeholder == null -%}
   <div
     class="
@@ -85,9 +107,20 @@
           </span>
         {%- else -%}
           <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
-          <span class="price-item price-item--regular">
-            {{ money_price }}
-          </span>
+          {% if is_promotion %}
+            <b class="soldes">Soldes !</b>
+            <span class="price-item price-item--regular old">
+              {{ money_price }}
+            </span>
+
+            <span class="price-item price-item--discount">
+              {{ money_discounted_price }}
+            </span>
+          {% else %}
+            <span class="price-item price-item--regular">
+              {{ money_price }}
+            </span>
+          {% endif %}
         {%- endif -%}
       </div>
       <div class="price__sale">
@@ -123,7 +156,7 @@
         </span>
       </small>
     </div>
-    {%- if show_badges -%}
+    {%- if show_badges or is_promotion -%}
       <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
         {{ 'products.product.on_sale' | t }}
       </span>
